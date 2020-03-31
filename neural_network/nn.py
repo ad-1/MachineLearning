@@ -30,9 +30,9 @@ class NeuralNetwork:
         """
 
         # training and testing data
-        self.training_inputs = inputs  # training dataset inputs
+        self.training_inputs = inputs  # network inputs
         self.targets = targets  # target outputs for the training data
-        self.n_data = len(self.training_inputs)  # size of training data
+        self.n_data = len(self.training_inputs)  # length of training data
 
         # network structure
         self.n_inputs = len(self.training_inputs[0])  # number of input nodes
@@ -73,7 +73,7 @@ class NeuralNetwork:
                 # forward pass
                 x = self.training_inputs[index]
                 self.a[0] = x
-                outputs = self.feedforward(x)
+                outputs = self.feedforward()
                 sum_error += sum(self.cost(outputs, index))
                 # backward pass
                 dw, db = self.backpropagation(index)
@@ -81,7 +81,7 @@ class NeuralNetwork:
                 self.update_weights(dw, db)
             print('>epoch=%d, error=%.3f' % (epoch, sum_error))
 
-    def feedforward(self, output):
+    def feedforward(self):
         """
         Propagating the inputs through the neural network to get some output.
         The feedforward first requires taking the dot product of the weight matrix with the corresponding
@@ -138,13 +138,13 @@ class NeuralNetwork:
         for i in reversed(range(1, self.n_layers)):
             if i == self.n_layers - 1:
                 # output layer
-                db[-1] = (self.targets[index] - self.a[-1]) * self.sp(self.z[-1])
-                dw[-1] = np.dot(np.asmatrix(db[-1]).transpose(), np.asmatrix(self.a[-2]))
+                db[-1] = (self.a[-1] - self.targets[index]) * self.sp(self.z[-1])
+                dw[-1] = np.dot(np.asmatrix(db[-1]), np.asmatrix(self.a[-2]).transpose())
             else:
                 # all other layers
                 # NOTE: to compute the weight gradient vector for hidden layer 1 the inputs to the network are used as `activation outputs`
                 db[i - 1] = np.multiply(np.dot(np.transpose(self.w[i]), db[i]), self.sp(self.z[i - 1]))
-                dw[i - 1] = np.dot(np.asmatrix(db[i - 1]).transpose(), np.asmatrix(self.a[i - 2]))
+                dw[i - 1] = np.dot(np.asmatrix(db[i - 1]), np.asmatrix(self.a[i - 2]).transpose())
 
         return dw, db
 

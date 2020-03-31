@@ -1,0 +1,6 @@
+tutorials/
+venv/
+pathfinding/
+.idea/
+.DS_Store
+visual.py

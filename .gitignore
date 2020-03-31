@@ -4,3 +4,6 @@ pathfinding/
 .idea/
 .DS_Store
 visual.py
+neural_network/nielson.py
+wheat*
+__pycache__

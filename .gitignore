@@ -1,9 +1,20 @@
+
+# working directories
 tutorials/
+dialogflow/
 venv/
 pathfinding/
-.idea/
-.DS_Store
-visual.py
+
+# files
+nlp_topic_modelling/nltk_basics.py
+nlp_topic_modelling/data/tech_crunch_articles.json
 neural_network/nielson.py
+visual.py
+
+# python/pycharm
+.idea/
 wheat*
 __pycache__
+
+# other
+.DS_Store
